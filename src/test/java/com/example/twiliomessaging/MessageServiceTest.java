@@ -3,6 +3,7 @@ package com.example.twiliomessaging;
 import com.example.twiliomessaging.entity.Message;
 import com.example.twiliomessaging.enums.EStatus;
 import com.example.twiliomessaging.exception.MessageDeletedException;
+import com.example.twiliomessaging.exception.MessageNotFoundException;
 import com.example.twiliomessaging.repository.MessageRepository;
 import com.example.twiliomessaging.service.MessageService;
 import org.junit.jupiter.api.BeforeEach;
@@ -83,10 +84,10 @@ class MessageServiceTest {
 	}
 
 	@Test
-	void getMessageById_shouldThrowExceptionWhenNotFound() {
+	void getMessageById_shouldThrowMessageNotFoundException() {
 		when(messageRepository.findById(1L)).thenReturn(Optional.empty());
 
-		RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+		MessageNotFoundException exception = assertThrows(MessageNotFoundException.class, () -> {
 			messageService.getMessageById(1L);
 		});
 
@@ -95,7 +96,7 @@ class MessageServiceTest {
 	}
 
 	@Test
-	void getMessageById_shouldThrowMessageDeletedException_whenMessageIsDeleted() {
+	void getMessageById_shouldThrowMessageDeletedException() {
 		Message message = new Message();
 		message.setId(1L);
 		message.setDeleted(true);
@@ -124,5 +125,21 @@ class MessageServiceTest {
 		assertTrue(message.getDeleted());
 		verify(messageRepository, times(1)).findById(1L);
 		verify(messageRepository, times(1)).save(message);
+	}
+
+	@Test
+	void deleteMessage_shouldThrowMessageDeletedException() {
+		Message message = new Message();
+		message.setId(1L);
+		message.setDeleted(true);
+
+		when(messageRepository.findById(1L)).thenReturn(Optional.of(message));
+
+		MessageDeletedException exception = assertThrows(MessageDeletedException.class, () -> {
+			messageService.deleteMessage(1L);
+		});
+
+		assertEquals("This message has already been deleted.", exception.getMessage());
+		verify(messageRepository, times(1)).findById(1L);
 	}
 }

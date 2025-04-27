@@ -3,6 +3,7 @@ package com.example.twiliomessaging.service;
 import com.example.twiliomessaging.entity.Message;
 import com.example.twiliomessaging.enums.EStatus;
 import com.example.twiliomessaging.exception.MessageDeletedException;
+import com.example.twiliomessaging.exception.MessageNotFoundException;
 import com.example.twiliomessaging.repository.MessageRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,18 +35,21 @@ public class MessageService {
 
     public Message getMessageById(Long id) {
         logger.info("Fetching message with ID: {}", id);
-        return messageRepository.findById(id)
-                .map(message -> {
-                    if (Boolean.TRUE.equals(message.getDeleted())) {
-                        throw new MessageDeletedException("This message has been deleted.");
-                    }
-                    return message;
-                })
-                .orElseThrow(() -> new RuntimeException("Message not found."));
+        Message message = messageRepository.findById(id)
+                .orElseThrow(() -> new MessageNotFoundException("Message not found."));
+        if (Boolean.TRUE.equals(message.getDeleted())) {
+            throw new MessageDeletedException("This message has been deleted.");
+        }
+        return message;
     }
 
     public void deleteMessage(Long id) {
-        Message message = getMessageById(id);
+        logger.info("Trying to delete message with ID: {}", id);
+        Message message = messageRepository.findById(id)
+                .orElseThrow(() -> new MessageNotFoundException("Message not found."));
+        if (Boolean.TRUE.equals(message.getDeleted())) {
+            throw new MessageDeletedException("This message has already been deleted.");
+        }
         message.setDeleted(true);
         messageRepository.save(message);
         logger.info("Message deleted with ID: {}", id);
