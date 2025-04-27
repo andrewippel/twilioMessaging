@@ -1,0 +1,19 @@
+package com.example.twiliomessaging.repository;
+
+import com.example.twiliomessaging.entity.Message;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface MessageRepository extends JpaRepository<Message, Long> {
+
+    @Query(value = "SELECT * FROM messages WHERE deleted = false", nativeQuery = true)
+    List<Message> findAllActiveMessages();
+
+    @Query(value = "SELECT * FROM messages WHERE id = :id AND deleted = false", nativeQuery = true)
+    Optional<Message> findActiveMessageById(Long id);
+}
