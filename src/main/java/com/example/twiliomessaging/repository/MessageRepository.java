@@ -13,7 +13,4 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
     @Query(value = "SELECT * FROM messages WHERE deleted = false", nativeQuery = true)
     List<Message> findAllMessages();
-
-    @Query(value = "SELECT * FROM messages WHERE id = :id AND deleted = false", nativeQuery = true)
-    Optional<Message> findMessageById(Long id);
 }

@@ -2,6 +2,7 @@ package com.example.twiliomessaging;
 
 import com.example.twiliomessaging.entity.Message;
 import com.example.twiliomessaging.enums.EStatus;
+import com.example.twiliomessaging.exception.MessageDeletedException;
 import com.example.twiliomessaging.repository.MessageRepository;
 import com.example.twiliomessaging.service.MessageService;
 import org.junit.jupiter.api.BeforeEach;
@@ -72,25 +73,41 @@ class MessageServiceTest {
 		Message message = new Message();
 		message.setId(1L);
 
-		when(messageRepository.findMessageById(1L)).thenReturn(Optional.of(message));
+		when(messageRepository.findById(1L)).thenReturn(Optional.of(message));
 
 		Message foundMessage = messageService.getMessageById(1L);
 
 		assertNotNull(foundMessage);
 		assertEquals(1L, foundMessage.getId());
-		verify(messageRepository, times(1)).findMessageById(1L);
+		verify(messageRepository, times(1)).findById(1L);
 	}
 
 	@Test
 	void getMessageById_shouldThrowExceptionWhenNotFound() {
-		when(messageRepository.findMessageById(1L)).thenReturn(Optional.empty());
+		when(messageRepository.findById(1L)).thenReturn(Optional.empty());
 
 		RuntimeException exception = assertThrows(RuntimeException.class, () -> {
 			messageService.getMessageById(1L);
 		});
 
-		assertEquals("Message not found", exception.getMessage());
-		verify(messageRepository, times(1)).findMessageById(1L);
+		assertEquals("Message not found.", exception.getMessage());
+		verify(messageRepository, times(1)).findById(1L);
+	}
+
+	@Test
+	void getMessageById_shouldThrowMessageDeletedException_whenMessageIsDeleted() {
+		Message message = new Message();
+		message.setId(1L);
+		message.setDeleted(true);
+
+		when(messageRepository.findById(1L)).thenReturn(Optional.of(message));
+
+		MessageDeletedException exception = assertThrows(MessageDeletedException.class, () -> {
+			messageService.getMessageById(1L);
+		});
+
+		assertEquals("This message has been deleted.", exception.getMessage());
+		verify(messageRepository, times(1)).findById(1L);
 	}
 
 	@Test
@@ -99,13 +116,13 @@ class MessageServiceTest {
 		message.setId(1L);
 		message.setDeleted(false);
 
-		when(messageRepository.findMessageById(1L)).thenReturn(Optional.of(message));
+		when(messageRepository.findById(1L)).thenReturn(Optional.of(message));
 		when(messageRepository.save(any(Message.class))).thenReturn(message);
 
 		messageService.deleteMessage(1L);
 
 		assertTrue(message.getDeleted());
-		verify(messageRepository, times(1)).findMessageById(1L);
+		verify(messageRepository, times(1)).findById(1L);
 		verify(messageRepository, times(1)).save(message);
 	}
 }

@@ -12,4 +12,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(MessageDeletedException.class)
+    public ResponseEntity<String> handleMessageDeletedException(MessageDeletedException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.GONE);
+    }
 }
