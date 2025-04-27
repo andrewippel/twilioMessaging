@@ -1,0 +1,111 @@
+package com.example.twiliomessaging;
+
+import com.example.twiliomessaging.entity.Message;
+import com.example.twiliomessaging.enums.EStatus;
+import com.example.twiliomessaging.repository.MessageRepository;
+import com.example.twiliomessaging.service.MessageService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+class MessageServiceTest {
+
+	@Mock
+	private MessageRepository messageRepository;
+
+	@InjectMocks
+	private MessageService messageService;
+
+	@BeforeEach
+	void setUp() {
+		MockitoAnnotations.openMocks(this);
+	}
+
+	@Test
+	void sendMessage_shouldSendMessage() {
+		Message message = new Message();
+		message.setSenderNumber("+1234567890");
+		message.setRecipientNumber("+0987654321");
+		message.setMessage("Test message!");
+
+		when(messageRepository.save(any(Message.class))).thenReturn(message);
+
+		Message savedMessage = messageService.sendMessage(message);
+
+		assertNotNull(savedMessage);
+		assertEquals(EStatus.SENT, savedMessage.getStatus());
+		verify(messageRepository, times(1)).save(any(Message.class));
+	}
+
+	@Test
+	void getAllMessages_shouldReturnAllMessages() {
+		Message message1 = new Message();
+		message1.setId(1L);
+		Message message2 = new Message();
+		message2.setId(2L);
+
+		when(messageRepository.findAllMessages()).thenReturn(Arrays.asList(message1, message2));
+
+		List<Message> messages = messageService.getAllMessages();
+
+		assertEquals(2, messages.size());
+		verify(messageRepository, times(1)).findAllMessages();
+	}
+
+	@Test
+	void getMessageById_shouldReturnMessageWithId() {
+		Message message = new Message();
+		message.setId(1L);
+
+		when(messageRepository.findMessageById(1L)).thenReturn(Optional.of(message));
+
+		Message foundMessage = messageService.getMessageById(1L);
+
+		assertNotNull(foundMessage);
+		assertEquals(1L, foundMessage.getId());
+		verify(messageRepository, times(1)).findMessageById(1L);
+	}
+
+	@Test
+	void getMessageById_shouldThrowExceptionWhenNotFound() {
+		when(messageRepository.findMessageById(1L)).thenReturn(Optional.empty());
+
+		RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+			messageService.getMessageById(1L);
+		});
+
+		assertEquals("Message not found", exception.getMessage());
+		verify(messageRepository, times(1)).findMessageById(1L);
+	}
+
+	@Test
+	void deleteMessage_shouldMarkMessageAsDeleted() {
+		Message message = new Message();
+		message.setId(1L);
+		message.setDeleted(false);
+
+		when(messageRepository.findMessageById(1L)).thenReturn(Optional.of(message));
+		when(messageRepository.save(any(Message.class))).thenReturn(message);
+
+		messageService.deleteMessage(1L);
+
+		assertTrue(message.getDeleted());
+		verify(messageRepository, times(1)).findMessageById(1L);
+		verify(messageRepository, times(1)).save(message);
+	}
+}
