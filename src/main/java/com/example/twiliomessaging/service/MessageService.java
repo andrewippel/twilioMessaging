@@ -16,16 +16,26 @@ public class MessageService {
 
     private static final Logger logger = LogManager.getLogger(MessageService.class);
     private final MessageRepository messageRepository;
+    private final TwilioService twilioService;
 
-    public MessageService(MessageRepository messageRepository) {
+    public MessageService(MessageRepository messageRepository, TwilioService twilioService) {
         this.messageRepository = messageRepository;
+        this.twilioService = twilioService;
     }
 
     public Message sendMessage(Message message) {
         message.setStatus(EStatus.SENT);
         Message savedMessage = messageRepository.save(message);
-        logger.info("Message sent: {}", savedMessage.getId());
-        return savedMessage;
+        logger.info("Message saved with ID: {}", savedMessage.getId());
+        try {
+            twilioService.sendSms(savedMessage.getSenderNumber(), savedMessage.getRecipientNumber(), savedMessage.getMessage());
+            savedMessage.setStatus(EStatus.DELIVERED);
+            logger.info("Message successfully sent via Twilio");
+        } catch (Exception e) {
+            savedMessage.setStatus(EStatus.FAILED);
+            logger.error("Failed to send message via Twilio. Error: {}", e.getMessage());
+        }
+        return messageRepository.save(savedMessage);
     }
 
     public List<Message> getAllMessages() {

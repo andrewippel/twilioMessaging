@@ -6,6 +6,7 @@ import com.example.twiliomessaging.exception.MessageDeletedException;
 import com.example.twiliomessaging.exception.MessageNotFoundException;
 import com.example.twiliomessaging.repository.MessageRepository;
 import com.example.twiliomessaging.service.MessageService;
+import com.example.twiliomessaging.service.TwilioService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -21,6 +22,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -33,25 +37,44 @@ class MessageServiceTest {
 	@InjectMocks
 	private MessageService messageService;
 
+	@InjectMocks
+	private TwilioService twilioService;
+
 	@BeforeEach
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
 	}
 
 	@Test
-	void sendMessage_shouldSendMessage() {
+	void sendMessage_shouldSetStatusDelivered() {
 		Message message = new Message();
-		message.setSenderNumber("+1234567890");
-		message.setRecipientNumber("+0987654321");
-		message.setMessage("Test message!");
+		message.setSenderNumber("123");
+		message.setRecipientNumber("456");
+		message.setMessage("Test message");
 
 		when(messageRepository.save(any(Message.class))).thenReturn(message);
 
-		Message savedMessage = messageService.sendMessage(message);
+		doNothing().when(twilioService).sendSms(anyString() ,anyString(), anyString());
 
-		assertNotNull(savedMessage);
-		assertEquals(EStatus.SENT, savedMessage.getStatus());
-		verify(messageRepository, times(1)).save(any(Message.class));
+		Message result = messageService.sendMessage(message);
+
+		assertEquals(EStatus.DELIVERED, result.getStatus());
+	}
+
+	@Test
+	void sendMessage_shouldSetStatusFailed() {
+		Message message = new Message();
+		message.setSenderNumber("123");
+		message.setRecipientNumber("456");
+		message.setMessage("Test message");
+
+		when(messageRepository.save(any(Message.class))).thenReturn(message);
+
+		doThrow(new RuntimeException("Twilio error")).when(twilioService).sendSms(anyString(), anyString(), anyString());
+
+		Message result = messageService.sendMessage(message);
+
+		assertEquals(EStatus.FAILED, result.getStatus());
 	}
 
 	@Test
