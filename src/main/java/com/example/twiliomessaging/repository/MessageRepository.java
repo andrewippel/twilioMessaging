@@ -12,8 +12,8 @@ import java.util.Optional;
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
     @Query(value = "SELECT * FROM messages WHERE deleted = false", nativeQuery = true)
-    List<Message> findAllActiveMessages();
+    List<Message> findAllMessages();
 
     @Query(value = "SELECT * FROM messages WHERE id = :id AND deleted = false", nativeQuery = true)
-    Optional<Message> findActiveMessageById(Long id);
+    Optional<Message> findMessageById(Long id);
 }

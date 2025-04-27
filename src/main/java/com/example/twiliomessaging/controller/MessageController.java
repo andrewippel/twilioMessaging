@@ -19,8 +19,8 @@ public class MessageController {
     }
 
     @PostMapping
-    public ResponseEntity<Message> createMessage(@RequestBody Message message) {
-        return new ResponseEntity<>(messageService.createMessage(message), HttpStatus.CREATED);
+    public ResponseEntity<Message> sendMessage(@RequestBody Message message) {
+        return new ResponseEntity<>(messageService.sendMessage(message), HttpStatus.CREATED);
     }
 
     @GetMapping

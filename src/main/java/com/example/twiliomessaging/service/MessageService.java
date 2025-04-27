@@ -19,21 +19,21 @@ public class MessageService {
         this.messageRepository = messageRepository;
     }
 
-    public Message createMessage(Message message) {
+    public Message sendMessage(Message message) {
         message.setStatus(EStatus.SENT);
-        Message saved = messageRepository.save(message);
-        logger.info("Message created: " + saved.getId());
-        return saved;
+        Message savedMessage = messageRepository.save(message);
+        logger.info("Message sent: {}", savedMessage.getId());
+        return savedMessage;
     }
 
     public List<Message> getAllMessages() {
         logger.info("Fetching all messages");
-        return messageRepository.findAllActiveMessages();
+        return messageRepository.findAllMessages();
     }
 
     public Message getMessageById(Long id) {
-        logger.info("Fetching message with ID: " + id);
-        return messageRepository.findActiveMessageById(id)
+        logger.info("Fetching message with ID: {}", id);
+        return messageRepository.findMessageById(id)
                 .orElseThrow(() -> new RuntimeException("Message not found"));
     }
 
@@ -41,6 +41,6 @@ public class MessageService {
         Message message = getMessageById(id);
         message.setDeleted(true);
         messageRepository.save(message);
-        logger.info("Message logically deleted with ID: " + id);
+        logger.info("Message deleted with ID: {}", id);
     }
 }
