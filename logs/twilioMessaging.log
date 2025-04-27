@@ -33,3 +33,83 @@
 2025-04-27T17:14:19.568-03:00  INFO 10852 --- [twilioMessaging] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-04-27T17:14:19.570-03:00  INFO 10852 --- [twilioMessaging] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2025-04-27T17:14:19.575-03:00  INFO 10852 --- [twilioMessaging] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-04-27T17:38:22.354-03:00  INFO 21088 --- [twilioMessaging] [main] c.e.t.TwilioMessagingApplication         : Starting TwilioMessagingApplication using Java 21.0.7 with PID 21088 (C:\github\twilioMessaging\target\classes started by André Wippel in C:\github\twilioMessaging)
+2025-04-27T17:38:22.355-03:00  INFO 21088 --- [twilioMessaging] [main] c.e.t.TwilioMessagingApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-04-27T17:38:22.773-03:00  INFO 21088 --- [twilioMessaging] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-27T17:38:22.815-03:00  INFO 21088 --- [twilioMessaging] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 35 ms. Found 1 JPA repository interface.
+2025-04-27T17:38:23.103-03:00  INFO 21088 --- [twilioMessaging] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-04-27T17:38:23.113-03:00  INFO 21088 --- [twilioMessaging] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-27T17:38:23.113-03:00  INFO 21088 --- [twilioMessaging] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-04-27T17:38:23.157-03:00  INFO 21088 --- [twilioMessaging] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-04-27T17:38:23.158-03:00  INFO 21088 --- [twilioMessaging] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 773 ms
+2025-04-27T17:38:23.256-03:00  INFO 21088 --- [twilioMessaging] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-27T17:38:23.292-03:00  INFO 21088 --- [twilioMessaging] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.13.Final
+2025-04-27T17:38:23.314-03:00  INFO 21088 --- [twilioMessaging] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-04-27T17:38:23.529-03:00  INFO 21088 --- [twilioMessaging] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-27T17:38:23.554-03:00  INFO 21088 --- [twilioMessaging] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-04-27T17:38:23.786-03:00  INFO 21088 --- [twilioMessaging] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7bc2bb58
+2025-04-27T17:38:23.788-03:00  INFO 21088 --- [twilioMessaging] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-04-27T17:38:23.847-03:00  INFO 21088 --- [twilioMessaging] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.42
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-27T17:38:24.411-03:00  INFO 21088 --- [twilioMessaging] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-27T17:38:24.444-03:00  INFO 21088 --- [twilioMessaging] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-27T17:38:24.597-03:00  INFO 21088 --- [twilioMessaging] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-27T17:38:24.668-03:00  WARN 21088 --- [twilioMessaging] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-04-27T17:38:24.901-03:00  INFO 21088 --- [twilioMessaging] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-04-27T17:38:24.906-03:00  INFO 21088 --- [twilioMessaging] [main] c.e.t.TwilioMessagingApplication         : Started TwilioMessagingApplication in 2.88 seconds (process running for 3.352)
+2025-04-27T17:38:40.842-03:00  INFO 21088 --- [twilioMessaging] [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-27T17:38:40.842-03:00  INFO 21088 --- [twilioMessaging] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-04-27T17:38:40.843-03:00  INFO 21088 --- [twilioMessaging] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-04-27T17:38:40.968-03:00  INFO 21088 --- [twilioMessaging] [http-nio-8080-exec-2] c.e.t.service.MessageService             : Message created: 1
+2025-04-27T17:44:59.583-03:00  INFO 21088 --- [twilioMessaging] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-27T17:44:59.586-03:00  INFO 21088 --- [twilioMessaging] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-04-27T17:44:59.588-03:00  INFO 21088 --- [twilioMessaging] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-27T17:44:59.590-03:00  INFO 21088 --- [twilioMessaging] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-04-27T17:44:59.595-03:00  INFO 21088 --- [twilioMessaging] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-04-27T17:45:01.973-03:00  INFO 23032 --- [twilioMessaging] [main] c.e.t.TwilioMessagingApplication         : Starting TwilioMessagingApplication using Java 21.0.7 with PID 23032 (C:\github\twilioMessaging\target\classes started by André Wippel in C:\github\twilioMessaging)
+2025-04-27T17:45:01.975-03:00  INFO 23032 --- [twilioMessaging] [main] c.e.t.TwilioMessagingApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-04-27T17:45:02.395-03:00  INFO 23032 --- [twilioMessaging] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-27T17:45:02.434-03:00  INFO 23032 --- [twilioMessaging] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 32 ms. Found 1 JPA repository interface.
+2025-04-27T17:45:02.715-03:00  INFO 23032 --- [twilioMessaging] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-04-27T17:45:02.725-03:00  INFO 23032 --- [twilioMessaging] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-27T17:45:02.725-03:00  INFO 23032 --- [twilioMessaging] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-04-27T17:45:02.762-03:00  INFO 23032 --- [twilioMessaging] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-04-27T17:45:02.762-03:00  INFO 23032 --- [twilioMessaging] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 756 ms
+2025-04-27T17:45:02.865-03:00  INFO 23032 --- [twilioMessaging] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-27T17:45:02.901-03:00  INFO 23032 --- [twilioMessaging] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.13.Final
+2025-04-27T17:45:02.925-03:00  INFO 23032 --- [twilioMessaging] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-04-27T17:45:03.130-03:00  INFO 23032 --- [twilioMessaging] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-27T17:45:03.159-03:00  INFO 23032 --- [twilioMessaging] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-04-27T17:45:03.395-03:00  INFO 23032 --- [twilioMessaging] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3d71e10b
+2025-04-27T17:45:03.396-03:00  INFO 23032 --- [twilioMessaging] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-04-27T17:45:03.456-03:00  INFO 23032 --- [twilioMessaging] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.42
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-27T17:45:04.010-03:00  INFO 23032 --- [twilioMessaging] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-27T17:45:04.044-03:00  INFO 23032 --- [twilioMessaging] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-27T17:45:04.201-03:00  INFO 23032 --- [twilioMessaging] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-27T17:45:04.280-03:00  WARN 23032 --- [twilioMessaging] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-04-27T17:45:04.514-03:00  INFO 23032 --- [twilioMessaging] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-04-27T17:45:04.519-03:00  INFO 23032 --- [twilioMessaging] [main] c.e.t.TwilioMessagingApplication         : Started TwilioMessagingApplication in 2.873 seconds (process running for 3.287)
+2025-04-27T17:45:21.874-03:00  INFO 23032 --- [twilioMessaging] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-27T17:45:21.874-03:00  INFO 23032 --- [twilioMessaging] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-04-27T17:45:21.875-03:00  INFO 23032 --- [twilioMessaging] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-04-27T17:45:22.000-03:00  INFO 23032 --- [twilioMessaging] [http-nio-8080-exec-1] c.e.t.service.MessageService             : Message created: 2
+2025-04-27T17:45:56.612-03:00  INFO 23032 --- [twilioMessaging] [http-nio-8080-exec-5] c.e.t.service.MessageService             : Message created: 3
+2025-04-27T17:50:48.204-03:00  INFO 23032 --- [twilioMessaging] [http-nio-8080-exec-9] c.e.t.service.MessageService             : Message created: 4
+2025-04-27T17:51:02.554-03:00  INFO 23032 --- [twilioMessaging] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-27T17:51:02.556-03:00  INFO 23032 --- [twilioMessaging] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-04-27T17:51:02.559-03:00  INFO 23032 --- [twilioMessaging] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-27T17:51:02.560-03:00  INFO 23032 --- [twilioMessaging] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-04-27T17:51:02.565-03:00  INFO 23032 --- [twilioMessaging] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

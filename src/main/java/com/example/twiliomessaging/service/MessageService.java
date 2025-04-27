@@ -1,6 +1,7 @@
 package com.example.twiliomessaging.service;
 
 import com.example.twiliomessaging.entity.Message;
+import com.example.twiliomessaging.enums.EStatus;
 import com.example.twiliomessaging.repository.MessageRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,7 +20,7 @@ public class MessageService {
     }
 
     public Message createMessage(Message message) {
-        message.setStatus("sent");
+        message.setStatus(EStatus.SENT);
         Message saved = messageRepository.save(message);
         logger.info("Message created: " + saved.getId());
         return saved;
