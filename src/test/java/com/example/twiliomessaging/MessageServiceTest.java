@@ -34,11 +34,11 @@ class MessageServiceTest {
 	@Mock
 	private MessageRepository messageRepository;
 
-	@InjectMocks
-	private MessageService messageService;
+	@Mock
+	private TwilioService twilioService;
 
 	@InjectMocks
-	private TwilioService twilioService;
+	private MessageService messageService;
 
 	@BeforeEach
 	void setUp() {
