@@ -16,10 +16,6 @@ public class TwilioService {
 
     public void sendSms(String from, String to, String message) {
         Twilio.init(accountSid, authToken);
-        Message.creator(
-                new com.twilio.type.PhoneNumber(to),
-                new com.twilio.type.PhoneNumber(from),
-                message
-        ).create();
+        Message.creator(new com.twilio.type.PhoneNumber(to), new com.twilio.type.PhoneNumber(from), message).create();
     }
 }

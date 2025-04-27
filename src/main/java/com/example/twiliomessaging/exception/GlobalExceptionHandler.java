@@ -22,4 +22,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleMessageDeletedException(MessageDeletedException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.GONE);
     }
+
+    @ExceptionHandler(MessageFailedException.class)
+    public ResponseEntity<String> handleMessageFailedException(MessageFailedException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_GATEWAY);
+    }
 }
