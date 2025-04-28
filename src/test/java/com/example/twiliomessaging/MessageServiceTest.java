@@ -3,6 +3,7 @@ package com.example.twiliomessaging;
 import com.example.twiliomessaging.entity.Message;
 import com.example.twiliomessaging.enums.EStatus;
 import com.example.twiliomessaging.exception.MessageDeletedException;
+import com.example.twiliomessaging.exception.MessageFailedException;
 import com.example.twiliomessaging.exception.MessageNotFoundException;
 import com.example.twiliomessaging.repository.MessageRepository;
 import com.example.twiliomessaging.service.MessageService;
@@ -23,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
@@ -61,20 +63,25 @@ class MessageServiceTest {
 		assertEquals(EStatus.DELIVERED, result.getStatus());
 	}
 
-	@Test
 	void sendMessage_shouldSetStatusFailed() {
 		Message message = new Message();
 		message.setSenderNumber("123");
 		message.setRecipientNumber("456");
-		message.setMessage("Test message");
+		message.setMessage("Hello");
 
-		when(messageRepository.save(any(Message.class))).thenReturn(message);
-
+		when(messageRepository.save(any(Message.class))).thenAnswer(invocation -> invocation.getArgument(0));
 		doThrow(new RuntimeException("Twilio error")).when(twilioService).sendSms(anyString(), anyString(), anyString());
 
-		Message result = messageService.sendMessage(message);
+		MessageFailedException exception = assertThrows(MessageFailedException.class, () -> {
+			messageService.sendMessage(message);
+		});
 
-		assertEquals(EStatus.FAILED, result.getStatus());
+		assertEquals("Failed to send SMS via Twilio.", exception.getMessage());
+
+		assertEquals(EStatus.FAILED, message.getStatus());
+
+		verify(messageRepository, atLeastOnce()).save(any(Message.class));
+		verify(twilioService, times(1)).sendSms(anyString(), anyString(), anyString());
 	}
 
 	@Test
