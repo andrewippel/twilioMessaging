@@ -10,6 +10,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -25,6 +28,7 @@ public class MessageService {
     }
 
     public Message sendMessage(Message message) {
+        message.setSendDateTime(LocalDateTime.now());
         message.setStatus(EStatus.SENT);
         Message savedMessage = messageRepository.save(message);
         logger.info("Message saved with ID: {}", savedMessage.getId());
@@ -71,5 +75,13 @@ public class MessageService {
         message.setDeleted(true);
         messageRepository.save(message);
         logger.info("Message deleted with ID: {}", id);
+    }
+
+    public List<Message> searchMessages(String recipientNumber, LocalDateTime sendDateTime) {
+        logger.info("Searching messages with filters RecipientNumber: {} and SendDateTime: {}", recipientNumber, sendDateTime);
+
+        // It's necessary to encode the number, because the URL treats the "+" sign as a space
+        String recipientNumberEncoded = URLEncoder.encode(recipientNumber, StandardCharsets.UTF_8);
+        return messageRepository.searchMessages(recipientNumberEncoded, sendDateTime);
     }
 }

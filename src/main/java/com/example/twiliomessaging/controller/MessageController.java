@@ -5,10 +5,12 @@ import com.example.twiliomessaging.service.MessageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -61,5 +63,16 @@ public class MessageController {
     public ResponseEntity<Void> deleteMessage(@PathVariable Long id) {
         messageService.deleteMessage(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Search messages by recipient number or send date/time")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved search results")
+    })
+    @GetMapping("/search")
+    public ResponseEntity<List<Message>> searchMessages(
+            @RequestParam(required = false) String recipientNumber,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime sendDateTime) {
+        return ResponseEntity.ok(messageService.searchMessages(recipientNumber, sendDateTime));
     }
 }

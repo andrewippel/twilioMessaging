@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -171,5 +172,21 @@ class MessageServiceTest {
 
 		assertEquals("This message has already been deleted.", exception.getMessage());
 		verify(messageRepository, times(1)).findById(1L);
+	}
+
+	@Test
+	void searchMessages_shouldReturnListOfMessages() {
+		Message message1 = new Message();
+		message1.setRecipientNumber("+123");
+		message1.setSendDateTime(LocalDateTime.of(2025, 4, 27, 18, 0));
+
+		when(messageRepository.searchMessages(anyString(), any(LocalDateTime.class))).thenReturn(List.of(message1));
+
+		List<Message> messages = messageService.searchMessages("123", LocalDateTime.of(2025, 4, 27, 18, 0));
+
+		assertNotNull(messages);
+		assertEquals(1, messages.size());
+		assertEquals("+123", messages.getFirst().getRecipientNumber());
+		verify(messageRepository, times(1)).searchMessages(anyString(), any(LocalDateTime.class));
 	}
 }

@@ -3,6 +3,8 @@ package com.example.twiliomessaging.entity;
 import com.example.twiliomessaging.enums.EStatus;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "messages")
 public class Message {
@@ -26,6 +28,9 @@ public class Message {
 
     @Column(nullable = false)
     private Boolean deleted = false;
+
+    @Column(name = "send_date_time", nullable = false)
+    private LocalDateTime sendDateTime;
 
     public Long getId() {
         return id;
@@ -68,4 +73,13 @@ public class Message {
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
+
+    public LocalDateTime getSendDateTime() {
+        return sendDateTime;
+    }
+
+    public void setSendDateTime(LocalDateTime sendDateTime) {
+        this.sendDateTime = sendDateTime;
+    }
+
 }
