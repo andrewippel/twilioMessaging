@@ -19,7 +19,7 @@ A RESTful API developed in Java 21 using Spring Boot for sending SMS messages vi
 1. **Clone the repository:**
 
 ```bash
-  git clone https://github.com/your-username/twilioMessaging.git
+  git clone https://github.com/andrewippel/twilioMessaging.git
 ```
 
 2. **Create a MySQL database:**
